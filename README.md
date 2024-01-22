@@ -3,7 +3,9 @@
 This repository contains the code for a FastAPI-based application designed for predicting house prices. It integrates FastAPI with MLflow, offering endpoints for model information retrieval, predictions, and health checks. 
 
 ## This code consists of two parts:
+
 - House_API: API on fastapi to predict house price of the inputs. The API also got a toy model of a client generating requests to the API
+
 - 'Property_Friends' machine learning pipeline: An automated pipeline to load data, process data, train, evaluate, log the model artificats using mlflow and  manage which model will be served to the House_API.
 
 Both applications got a docker image, are easily scalable and adheres good programming pratices including modularization and documentation (which docstrings on the files).
@@ -12,14 +14,23 @@ Ie: for the training pipeline a user can specify to feed data with csv files or 
 
 
 ## This Readme includes:
+- Changes from the notebook code and new pipeline (to ensure data robustness)
 - How to run the API and train pipeline
+- How to customize some parameters
 - House_API: modules description (from modules docstrings) and function descriptions (from functions docstrings)
-- Video showing how the API works and how it deals with potential edge cases
 - Training_pipeline: modules description (from modules docstrings) and function descriptions (from functions docstrings)
-- Video showing how the training pipeline works
-- How to customize some components
+- Possible improvements
 
-## Running the aplications
+## Changes in the original notebook code
+
+The notebook had data leak, the column price was inside the input data. It was removed.
+
+Included new pipelines to include robustness to the model:
+
+![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/ea778af8-188d-48ce-aa06-08eb1387b8c3)
+
+
+## Running the code
 
 Test if the mlflow is working:
 
@@ -98,7 +109,6 @@ Troubleshoot: If you get an error after last step, your port might be in use. Tr
 (check the toy client inside server_API folder for mora details)
 
 
-
 ------
 
 ## Training the model with mlflow and deploying it on the API
@@ -131,6 +141,7 @@ Troubleshoot: If you get an error after last step, your port might be in use. Tr
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/18858156-fbca-4864-8565-4f7745edb7e3)
 
+------
 
 ## Training a model with different parameters or different preprocessing steps
 
@@ -166,8 +177,7 @@ new model:
 1. Open config.json
    
 2. Change "csv_or_sql" to "sql" and change "sql_query_train", "sql_query_test" and "sql_connection_url"
-
-   
+ 
 ------
 
 ## House_API
@@ -832,3 +842,15 @@ SQL fields (url and query) dont have a default value.
 ###create_loggers.py:
 
 same file used in the API.
+
+------
+
+Possible improvements:
+
+- Add a data skew monitor and improve anomaly monitor logger. One fast solution could be using Alibi Detect
+
+- Monitor and version input data. One solution could be using DVC
+
+- Model parameters
+
+- Integrate the API with a cloud service
