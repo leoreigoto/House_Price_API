@@ -1,0 +1,8 @@
+{
+  "csv_or_sql": "csv",
+  "train_path": "data/train.csv",
+  "test_path": "data/test.csv",
+  "sql_query_train": "",
+  "sql_query_test": "",
+  "sql_connection_url": ""
+}

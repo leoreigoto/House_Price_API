@@ -1,0 +1,10 @@
+{
+    "model_name": "House_Price",
+    "model_alias": "production",
+    "model_version": "1",
+    "models_path": "models",
+    "model_file_name": "local_model.pkl",
+    "enable_pred_data_log": true,
+    "model_update_timer": 60,
+    "health_check_timer": 60
+}
