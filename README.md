@@ -847,3 +847,5 @@ Possible improvements:
 - Model parameters
 
 - Integrate the API with a cloud service
+
+- Timeout logics in the fastapi integrations with mlflow server and monitor integration status (online/offline)
