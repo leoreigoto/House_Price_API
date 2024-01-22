@@ -27,7 +27,9 @@ The notebook had data leak, the column price was inside the input data. It was r
 
 Included new pipelines to include robustness to the model:
 
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/ea778af8-188d-48ce-aa06-08eb1387b8c3)
+![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/2668e6b4-f3c3-4573-965f-24723abccb16)
+
+
 
 
 ## Running the code
@@ -37,19 +39,15 @@ Test if the mlflow is working:
 run on cmd: "mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts --host 127.0.0.1 --port 5000"
 inside of training_pipeline folder
 
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/1e7e42ae-27be-4c1a-8690-e3e79f8b812f)
+run on cmd: "mlflow ui" and check if its working
 
-run on cmd: "mlflow ui" and check if everything is alright
-
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/d9411a65-64d5-494c-bdda-b2c090743517)
+![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/5a5b81b0-6119-414c-ae34-56ddeeb9a63c)
 
 Proceed to install docker containers:
 
 Go to train_pipeline folder and run on cmd:
 
 "docker build . -t house_price_api_ml_pipeline_v1"
-
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/1b44968d-d1a4-4f53-9d4d-b3a86204307b)
 
 Then go to server_API folder and run on cmd:
 
@@ -59,34 +57,33 @@ Open docker desktop:
 
 Click on 'house_price_api_ml_pipeline_v1" image, then click on the button to start it :
 
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/d6e23830-b77e-43bb-94da-ebff82cbefcd)
+![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/f1a7ef3e-a783-4fce-b0ce-663c37d150a7)
 
 Fill the informations bellow and click on run:
 
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/3a9e688c-02d1-42dd-8d4a-a061f72dc05d)
+![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/37da1742-abdf-4533-87ed-022563cf09e3)
 
 Now run the image "house_price_api_server_v1" image and fill the information bellow:
 
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/a42fbd06-91bc-4d41-9152-5adbef58ec70)
+![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/16835969-aab0-479b-b3f0-931ce36fed12)
+
 
 
 The application wont start. You need to change the mlflow IP adress for the container adress in the docker network.
 
 Go to Container -> house_API_container -> Files -> HouseAPI and right click to edit API_main_mlflow.py
 
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/d2808953-9f74-4ff5-b00f-470a290be74f)
-
+![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/368f1f3c-c278-48ab-a8ad-f55aee2a8dfc)
 
 
 On cmd run: 
 
 "docker inspect House_ML_Container"
 
-"![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/25b4c595-0973-40af-9f1e-229af10f08bc)
-
 Search for the IP adress. Keep this e-mail adress.
 
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/e1bb1ebb-f6e5-4651-854d-6125c66e5b38)
+![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/d6a2b96e-b548-4516-84a5-803051408452)
+
 
 Replace the adress in line 39 of API_main_mlflow.py to the one you found:
 
@@ -94,11 +91,13 @@ Replace the adress in line 39 of API_main_mlflow.py to the one you found:
 
 Click on save and restart container
 
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/c7ee4ece-08e4-4c19-b6b8-17372eb1a789)
+![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/354cd609-b15d-438c-9bd3-a5472628fb9c)
+
 
 The application should start now:
 
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/df813393-18a6-4cdb-9507-27312de13a44)
+![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/178a49a0-e10d-4aa9-879f-f4c1f9d56a66)
+
 
 Troubleshoot: If you get an error after last step, your port might be in use. Try to assign host port as 0 and docker will try to find an open port.
 
@@ -117,25 +116,25 @@ Troubleshoot: If you get an error after last step, your port might be in use. Tr
 
 1. On ML Pipeline container go to "Exec" and run "python Property_Friends_main.py"
 
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/a0d274a0-37ca-4209-b91e-4efc9aecd259)
+![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/bfbc3249-dccd-425d-a3a4-403ca227e4a6)
 
 2. A new experiment should appear om mlflow ui  (http://127.0.0.1:5000/)
 
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/5667c4bd-ffe8-46a9-a05e-5e14d771ca15)
+![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/3fb1d87d-a22b-44c0-bede-50570e1ca190)
 
 3. Click on the run. There you can check model config in "parameters" or metrics in "metrics".
 
 4. To register the model click on deploy and them select the model name
 
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/ca805c5b-17ab-4700-b03c-4c65d5428816)
+![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/f46477a6-2e09-4f26-9abc-4c9e20cc3ea3)
 
 5. You can check registered models on "models" page
 
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/e6819213-1ba7-48bc-82b8-dc982fd210f8)
+![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/4da281ef-5b69-48ce-bd76-c5f5a203cde3)
 
 6. Clicking in the model name you can also set an alias for it
 
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/60333a27-c28d-469d-901f-55293c234d24)
+![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/bb2dac5c-b84f-4edd-a4a3-856ade1a9b5f)
 
 7. The fastapi will load whatever model matches the name and alias in the server config.json file
 
@@ -147,19 +146,17 @@ Troubleshoot: If you get an error after last step, your port might be in use. Tr
 
 1. Change parameters in Property_Friends_build_pipeline.py:
 
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/17324f25-4146-460a-81ba-55854741f8cd)
-
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/8911771b-59d3-4aa7-8774-46dd1b53d9f1)
 
 2. train the model
 
 3. check results on mlflow API and compare results:
 
-previous model:
+previous experiment:
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/681cffd0-7555-4e70-a256-21352ca9c595)
 
-new model:
+new experiment:
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/a81bda13-c2f1-40d2-a930-706daf1277d4)
 
