@@ -21,91 +21,88 @@ Ie: for the training pipeline a user can specify to feed data with csv files or 
 - Training_pipeline: modules description (from modules docstrings) and function descriptions (from functions docstrings)
 - Possible improvements
 
-## Changes in the original notebook code
 
-The notebook had data leak, the column price was inside the input data. It was removed.
+## House Price Prediction Application: Setup and Operation Guide
 
-Included new pipelines to include robustness to the model:
+
+Changes to the Original Notebook Code:
+
+Data Leak Fix: The column 'price' was removed from the input data to prevent data leakage.
+
+New Pipelines: Additional pipelines have been included to enhance the model's robustness.
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/2668e6b4-f3c3-4573-965f-24723abccb16)
 
+Running the Code:
 
+MLflow server, run:
 
+      mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts --host 127.0.0.1 --port 5000 in the training_pipeline folder.
 
-## Running the code
-
-Test if the mlflow is working:
-
-run on cmd: "mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts --host 127.0.0.1 --port 5000"
-inside of training_pipeline folder
-
-run on cmd: "mlflow ui" and check if its working
+Execute "mlflow ui" in the command line and verify if it is working properly
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/5a5b81b0-6119-414c-ae34-56ddeeb9a63c)
 
-Proceed to install docker containers:
+Docker Container Installation
 
-Go to train_pipeline folder and run on cmd:
+Installing the Containers:
 
-"docker build . -t house_price_api_ml_pipeline_v1"
+In the train_pipeline folder, execute 
+   
+      "docker build . -t house_price_api_ml_pipeline_v1"
 
-Then go to server_API folder and run on cmd:
+Navigate to the server_API folder and run:
 
-"docker build . -t house_price_api_server_v1"
+      docker build . -t house_price_api_server_v1.
+      
+Starting Docker Containers:
 
-Open docker desktop:
+Open Docker Desktop.
 
-Click on 'house_price_api_ml_pipeline_v1" image, then click on the button to start it :
+Click on the 'house_price_api_ml_pipeline_v1' image and start it.
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/f1a7ef3e-a783-4fce-b0ce-663c37d150a7)
 
-Fill the informations bellow and click on run:
+Fill in the necessary information as shown below and click 'Run'.
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/37da1742-abdf-4533-87ed-022563cf09e3)
 
-Now run the image "house_price_api_server_v1" image and fill the information bellow:
+Repeat the process for the 'house_price_api_server_v1' image.
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/16835969-aab0-479b-b3f0-931ce36fed12)
 
+The application won't start. You need to configure docker to enable communication the 2 containers.
 
+Configuring MLflow and Docker:
 
-The application wont start. You need to change the mlflow IP adress for the container adress in the docker network.
-
-Go to Container -> house_API_container -> Files -> HouseAPI and right click to edit API_main_mlflow.py
+Navigate to Container -> house_API_container -> Files -> HouseAPI.
+Edit API_main_mlflow.py.
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/368f1f3c-c278-48ab-a8ad-f55aee2a8dfc)
 
-
-On cmd run: 
-
-"docker inspect House_ML_Container"
-
-Search for the IP adress. Keep this e-mail adress.
+Run "docker inspect House_ML_Container" in the command line and note the IP address.
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/d6a2b96e-b548-4516-84a5-803051408452)
 
 
-Replace the adress in line 39 of API_main_mlflow.py to the one you found:
+Replace the address in line 39 of API_main_mlflow.py with the noted IP address.
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/372d4e5b-9424-4583-9b99-cbf2ee60d0c8)
 
-Click on save and restart container
+Save changes and restart the container.
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/354cd609-b15d-438c-9bd3-a5472628fb9c)
 
+Troubleshooting:
 
-The application should start now:
-
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/178a49a0-e10d-4aa9-879f-f4c1f9d56a66)
-
-
-Troubleshoot: If you get an error after last step, your port might be in use. Try to assign host port as 0 and docker will try to find an open port.
+Common Error: Port In Use
+If an error occurs, try assigning the host port as 0 to let Docker find an open port.
 
 ------
 
 ## Hosting API on docker and testing edge cases
 
-(check the toy client inside server_API folder for mora details)
+Refer to the 'toy client' inside the server_API folder for more details on testing and validation.
 
 ![](https://github.com/leoreigoto/House_Price_API/blob/main/ezgif-4-64749a6e8b.gif)
 
@@ -114,67 +111,66 @@ Troubleshoot: If you get an error after last step, your port might be in use. Tr
 
 ## Training the model with mlflow and deploying it on the API
 
-1. On ML Pipeline container go to "Exec" and run "python Property_Friends_main.py"
+Model Training:
+
+In the ML Pipeline container, go to "Exec" and run python Property_Friends_main.py.
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/bfbc3249-dccd-425d-a3a4-403ca227e4a6)
 
-2. A new experiment should appear om mlflow ui  (http://127.0.0.1:5000/)
+A new experiment should appear in the mlflow UI (http://127.0.0.1:5000/).
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/3fb1d87d-a22b-44c0-bede-50570e1ca190)
 
-3. Click on the run. There you can check model config in "parameters" or metrics in "metrics".
+Model Deploying:
 
-4. To register the model click on deploy and them select the model name
+Click on the run in mlflow UI. Check model configuration under "Parameters" or metrics under "Metrics".
+To register the model, click on 'Deploy' and select the model name.
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/f46477a6-2e09-4f26-9abc-4c9e20cc3ea3)
 
-5. You can check registered models on "models" page
+Verify registered models on the "Models" page.
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/4da281ef-5b69-48ce-bd76-c5f5a203cde3)
 
-6. Clicking in the model name you can also set an alias for it
+Set an alias for the model by clicking on its name.
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/bb2dac5c-b84f-4edd-a4a3-856ade1a9b5f)
 
-7. The fastapi will load whatever model matches the name and alias in the server config.json file
+The FastAPI will load any model that matches the name and alias in the config.json file of the server.
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/18858156-fbca-4864-8565-4f7745edb7e3)
 
 ------
 
-## Training a model with different parameters or different preprocessing steps
+## Modifying Training Parameters and Data Sources
 
-1. Change parameters in Property_Friends_build_pipeline.py:
+Altering Training Parameters:
+
+Change parameters in Property_Friends_build_pipeline.py.
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/8911771b-59d3-4aa7-8774-46dd1b53d9f1)
 
-2. train the model
-
-3. check results on mlflow API and compare results:
-
-previous experiment:
+Train the model and check results on the mlflow API. Compare the results with previous experiments.
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/681cffd0-7555-4e70-a256-21352ca9c595)
-
-new experiment:
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/a81bda13-c2f1-40d2-a930-706daf1277d4)
 
 
-## Adding new inputs to the model:
+Adding New Inputs:
 
-1. Open Property_Friends_prepare_data.py:
-
-2. Insert column name under "categorical_cols" or "numerical_cols" in get_columns_type()
+In Property_Friends_prepare_data.py, insert a new column name under "categorical_cols" or "numerical_cols" in get_columns_type().
 
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/c501f1d3-83b8-4de0-8b72-b39311416b22)
 
-## Changing training data from csv to SQL
+Changing Training Data Source:
 
-1. Open config.json
-   
-2. Change "csv_or_sql" to "sql" and change "sql_query_train", "sql_query_test" and "sql_connection_url"
- 
+Open config.json.
+
+Change "csv_or_sql" to "sql" and update
+
+Update: "sql_query_train", "sql_query_test" and "sql_connection_url"
+
 ------
 
 ## House_API
