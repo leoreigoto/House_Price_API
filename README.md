@@ -108,6 +108,8 @@ Troubleshoot: If you get an error after last step, your port might be in use. Tr
 
 (check the toy client inside server_API folder for mora details)
 
+![](https://github.com/leoreigoto/House_Price_API/blob/main/ezgif-4-64749a6e8b.gif)
+
 
 ------
 
@@ -122,8 +124,6 @@ Troubleshoot: If you get an error after last step, your port might be in use. Tr
 ![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/5667c4bd-ffe8-46a9-a05e-5e14d771ca15)
 
 3. Click on the run. There you can check model config in "parameters" or metrics in "metrics".
-
-![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/0357a8c7-382a-466c-8550-9b4ca47af2e9)
 
 4. To register the model click on deploy and them select the model name
 
