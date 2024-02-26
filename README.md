@@ -2,6 +2,9 @@
 
 This repository contains the code for a FastAPI-based application designed for predicting house prices. It integrates FastAPI with MLflow, offering endpoints for model information retrieval, predictions, and health checks. 
 
+![image](https://github.com/leoreigoto/House_Price_API/assets/48571786/9f460f04-c81c-4c6f-bad4-2da7d88e4c97)
+
+
 ## This code consists of two parts:
 
 - House_API: API on fastapi to predict house price of the inputs. The API also got a toy model of a client generating requests to the API
